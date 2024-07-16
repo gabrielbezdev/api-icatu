@@ -1,10 +1,12 @@
 import express from 'express';
-import Routes from './routes/userRoutes.js';
+import useRoutes from './routes/userRoutes.js';
+import squadRoutes from './routes/squadRoutes.js'
 
 const app = express();
 
 app.use(express.json());
-app.use('/users', Routes);
+app.use('/users', useRoutes);
+app.use('/squads', squadRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

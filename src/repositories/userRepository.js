@@ -2,7 +2,31 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const getAllUsers = async () => {
-    return await prisma.user.findMany();
+    return await prisma.user.findMany({
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            password: true,
+            createdAt: true,
+            updatedAt: true,
+            age: true,
+            contact: true,
+            state: true,
+            city: true,
+            blood_type: true,
+            allergies: true,
+            medications_in_use: true,
+            emergency_contact_name: true,
+            emergency_contact: true,
+            squad: {
+                select: {
+                    id: true,
+                    name: true,
+                },
+            },
+        },
+    });
 };
 
 export const getUserById = async (id) => {

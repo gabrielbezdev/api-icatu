@@ -11,7 +11,7 @@ model User {
   id                       String    @id @default(uuid())
   name                     String?   @db.VarChar(255)
   email                    String    @unique @db.VarChar(255)
-  password                 String    @unique @db.VarChar(255)
+  password                 String    @db.VarChar(255)
   createdAt                DateTime  @default(now()) @db.Timestamp(6)
   updatedAt                DateTime  @updatedAt @db.Timestamp(6)
   age                      Int?     
@@ -29,11 +29,15 @@ model User {
 }
 
 model Squad {
-  id                  String   @id @default(uuid())
-  camouflage_pattern  String   @db.VarChar(255)
-  main_armament       String   @db.VarChar(255)
-  payment_voucher     String   @db.VarChar(255)
-  user                User[]
+  id              String   @id @default(uuid())
+  createdAt       DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt       DateTime  @updatedAt @db.Timestamp(6)
+  name            String   @db.VarChar(255)
+  acronym         String   @db.VarChar(255)
+  location        String   @db.VarChar(255)
+  creation_date   String   @db.VarChar(255)
+  history         String   @db.VarChar(5000)
+  user            User[]
 }
 
 model Enrollment {

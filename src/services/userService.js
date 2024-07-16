@@ -8,7 +8,11 @@ export const getUserById = (id) => {
     return userRepository.getUserById(id);
 };
 
-export const createUser = (userData) => {
+export const createUser = async (userData) => {
+    const existingUser = await userRepository.getUserById(userData.email);
+    if (existingUser) {
+        throw new Error('Email already in use');
+    }
     return userRepository.createUser(userData);
 };
 

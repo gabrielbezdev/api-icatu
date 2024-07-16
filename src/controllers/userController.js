@@ -23,7 +23,11 @@ export const createUser = async (req, res) => {
         const newUser = await userService.createUser(req.body);
         res.status(201).json(newUser);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        if (error.message === 'Email already in use') {
+            res.status(400).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: error.message });
+        }
     }
 };
 
