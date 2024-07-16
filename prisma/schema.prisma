@@ -8,18 +8,63 @@ datasource db {
 }
 
 model User {
-  id                       String   @id @default(uuid())
-  name                     String   @db.VarChar(255)
-  email                    String   @unique @db.VarChar(255)
-  createdAt                DateTime @default(now()) @db.Timestamp(6)
-  updatedAt                DateTime @updatedAt @db.Timestamp(6)
-  age                      Int     
-  contact                  String   @db.VarChar(255)   
-  state                    String   @db.VarChar(255)
-  city                     String   @db.VarChar(255)
-  blood_type               String   @db.VarChar(255)
-  allergies                String   @db.VarChar(255)
-  medications_in_use       String   @db.VarChar(255)
-  emergency_contact_name   String   @db.VarChar(255)
-  emergency_contact        String   @db.VarChar(255)
+  id                       String    @id @default(uuid())
+  name                     String?   @db.VarChar(255)
+  email                    String    @unique @db.VarChar(255)
+  password                 String    @unique @db.VarChar(255)
+  createdAt                DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt                DateTime  @updatedAt @db.Timestamp(6)
+  age                      Int?     
+  contact                  String?   @db.VarChar(255)   
+  state                    String?   @db.VarChar(255)
+  city                     String?   @db.VarChar(255)
+  blood_type               String?   @db.VarChar(255)
+  allergies                String?   @db.VarChar(255)
+  medications_in_use       String?   @db.VarChar(255)
+  emergency_contact_name   String?   @db.VarChar(255)
+  emergency_contact        String?   @db.VarChar(255)
+  enrollment               Enrollment[]
+  squad                    Squad     @relation(fields: [squad_id], references: [id])
+  squad_id                 String
+}
+
+model Squad {
+  id                  String   @id @default(uuid())
+  camouflage_pattern  String   @db.VarChar(255)
+  main_armament       String   @db.VarChar(255)
+  payment_voucher     String   @db.VarChar(255)
+  user                User[]
+}
+
+model Enrollment {
+  id                  String   @id @default(uuid())
+  camouflage_pattern  String   @db.VarChar(255)
+  main_armament       String   @db.VarChar(255)
+  payment_voucher     String   @db.VarChar(255)
+  user                User     @relation(fields: [user_id], references: [id])
+  user_id             String
+  operation           Operation     @relation(fields: [operation_id], references: [id])
+  operation_id        String
+}
+
+model Operation {
+  id              String   @id @default(uuid())
+  editon          String   @db.VarChar(255) 
+  history         String   @db.VarChar(255) 
+  briefing        String   @db.VarChar(255) 
+  armies          String   @db.VarChar(255) 
+  records         String   @db.VarChar(255) 
+  participants    String   @db.VarChar(255) 
+  upshot          String   @db.VarChar(255) 
+  enrollment      Enrollment[]
+  rating          Rating[]
+}
+
+model Rating {
+  id            String   @id @default(uuid())
+  operator      String   @db.VarChar(255) 
+  comment       String   @db.VarChar(255) 
+  rate          String   @db.VarChar(255)
+  operation     Operation     @relation(fields: [operation_id], references: [id])
+  operation_id  String
 }
